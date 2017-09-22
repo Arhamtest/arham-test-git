@@ -1,0 +1,62 @@
+{% extends 'music/base.html' %}
+{% block title %}Add a New Product{% endblock %}
+{% block contact_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-sm-12 col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Drop Your Message</h3><br/>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include 'music/form_template.html' %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <p> *Please mention Item CODE</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <h4>Siddharth S. Shah</h4>
+                        <h4><li class="glyphicon glyphicon-earphone"> 9619038489</li></h4>
+
+                        <h4><li class="glyphicon glyphicon-map-marker">&nbsp;11/13, Shamseth Street,
+                            <br/> &nbsp; 1st Floor, (chippi Chawl),
+                            <br/> &nbsp; Off. A.R Street,
+                            <br/> &nbsp; Mumbai 400002</li></h4><br/>
+
+                        <a href="#"><h4><li class="fa fa-facebook">&nbsp; FaceBook</li></h4></a>
+                        <a href="https://www.instagram.com/arham_collections/"><h4><li class="fa fa-instagram">&nbsp; Instagram</li></h4></a>
+
+
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

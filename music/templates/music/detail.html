@@ -1,0 +1,67 @@
+{% extends 'music/base.html' %}
+{% block albums_active %}active{% endblock %}
+
+{% block body %}
+<div class="albums-container container-fluid">
+
+    <!-- Albums -->
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>{{ user.username }} Details Page</h3>
+        </div>
+        {% if album %}
+            {% for song in album.song_set.all %}
+                <div class="col-sm-4 col-lg-2">
+                    <div class="thumbnail">
+                        <a target="_blank" href="{{ song.audio_file.url }}">
+                            <img src="{{ song.audio_file.url }}" class="img-responsive">
+                        </a>
+                        <div class="caption">
+                            <bold><h4> Code: {{ song.song_number }}</h4></bold>
+                            <h2>{{ song.song_title }}</h2>
+                            <h5>{{ song.song_desc }}</h5>
+                            <h4>{{ song.song_price }}</h4>
+
+                            <!-- View Details -->
+                            <a href="{% url 'music:contact' %}" class="btn btn-primary btn-sm" role="button">Book Now</a>
+
+                        {% if user.is_superuser %}
+                            <!-- Delete Album -->
+                                    <form action="{% url 'music:delete_song' album.id song.id %}" method="post" style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="song_id" value="{{ song.id }}" />
+                                        <button type="submit" class="btn btn-danger btn-xs">
+                                            <span class="glyphicon glyphicon-remove"></span>&nbsp; Delete
+                                        </button>
+                                    </form>
+                        {% endif %}
+
+                        {% if user.is_authenticated %}
+                            <!-- Favorite Album -->
+                                <td>
+                                    <a href="{% url 'music:favorite' song.id %}" class="btn-favorite">
+                                        <span class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span>
+                                    </a>
+                                </td>
+                        {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+                {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+            {% endfor %}
+        {% endif %}
+    </div>
+            {% if user.is_superuser %}
+            <div class="col-sm-12">
+                <br>
+                <a href="{% url 'music:create_song' album.id %}">
+                    <button type="button" class="btn btn-success">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp; Add Items
+                    </button>
+                </a>
+            </div>
+                {% endif %}
+    <!-- If user searches and there are songs -->
+</div>
+{% endblock %}
